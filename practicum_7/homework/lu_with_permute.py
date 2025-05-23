@@ -36,21 +36,15 @@ class LuSolverWithPermute(LinearSystemSolver):
         P = np.eye(n, dtype=self.dtype)
 
         for k in range(n-1):
-            # выбор пивота
             if permute:
-                # находим индекс максимума в столбце k среди строк k..n-1
                 max_row = np.argmax(np.abs(U[k:, k])) + k 
                 pivot = U[max_row, k]
 
                 if pivot == 0:
                     raise ValueError("Zero, pivot")
-                # если лучший пивот не в текущей строке, меняем строки в U, P и L
                 if max_row != k:
-                    # перестановка строк в U
                     U[[k, max_row], :] = U[[max_row, k], :]
-                    # аккумулируем перестановку в P
                     P[[k, max_row], :] = P[[max_row, k], :]
-                    # меняем строки в L (только столбцы < k)
                     if k > 0:
                         L[[k, max_row], :k] = L[[max_row, k], :k]
             else:
