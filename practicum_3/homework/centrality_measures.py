@@ -54,6 +54,7 @@ def betweenness_centrality(G: AnyNxGraph) -> dict[Any, float]:
         for path in all_paths:
             for v in path[1:-1]:  
                 centrality[v] += 1.0 / s
+                
     if not nx.is_directed(G):
         n = len(nodes)
         sc = 2.0 / ((n - 1) * (n - 2)) if n > 2 else 1.0
